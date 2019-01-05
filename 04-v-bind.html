@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./vue2.js"></script>
+        <style>
+            .red {
+                color: red;
+            }
+            .blue {
+                color: blue;
+            }
+            .font-size {
+                font-size: 24px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <!-- v-bind 可以动态绑定属性，使用方法：v-bind:属性名="data里的属性名" -->
+            <img v-bind:src="imgSrc" alt="">
+
+            <!-- 简写方式  :属性名="data里的属性名"-->
+            <img :src="imgSrc" alt="">
+            <a :href="'del.php?id=' + id">删除</a>
+
+            <!-- v-bind可以想绑什么属性就绑什么属性，后续组件开发比较常用 -->
+            <p :name="name">测试属性绑定</p>
+
+            <!-- 在绑定 class 或 style 特性时，支持其它类型的值，如数组或对象 -->
+            <h1>class绑定</h1>
+            <!-- v-bind 动态绑定样式 方法 :class="{'类名': 布尔值}" -->
+            <p :class="{'red': true}">颜色代表立场</p>
+
+            <!-- 绑定多个类名 -->
+            <p :class="['blue', 'font-size']">蓝色字体-24字号</p>
+            <p :class="['blue', {'font-size': boolean}]">蓝色字体--字号为false不生效</p>
+
+            <h1>style绑定</h1>
+            <!-- 变量加常量 -->
+            <p :style="{fontSize: size + 'px'}">size22</p>
+            <!-- 对象数组 -->
+            <p :style="[styleObjA, styleObjB]">字体绿色--size30</p>
+        </div>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    imgSrc: './img/zero.jpg',
+                    id: 11,
+                    name: 'xiaowu',
+                    boolean: false,
+                    size: 22,
+                    styleObjA: {color: 'green'},
+                    styleObjB: {fontSize: '30px'}
+                }
+            })
+        </script>
+    </body>
+</html>

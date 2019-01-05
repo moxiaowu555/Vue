@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./vue2.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <!-- v-model 用来双向绑定数据：就是model和view中的值进行同步变化
+                 v-model只能在input/textarea/select 中使用
+            -->
+            <input type="text" v-model="value">
+            <textarea name="" id="" cols="30" rows="10" v-model="text"></textarea>
+        </div>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    value: 'xiaowu',
+                    text: '猪事皆宜，百无禁忌'
+                }
+            })
+        </script>
+    </body>
+</html>

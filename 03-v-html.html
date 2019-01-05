@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./vue2.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <!-- v-html: 可渲染带标签的文本 -->
+            <div v-html="title"></div>
+        </div>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    title: '<h1>猪事皆宜，百无禁忌</h1>'
+                }
+            })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./vue2.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <p>{{name}}</p>
+
+            <!-- 插值表达式的合法用法：表达式和三元运算符 -->
+            <h1>表达式</h1>
+            <p>{{"莫-"+name}}</p>
+            <p>{{age + 2}}</p>
+            <p>{{name.split('').reverse().join('')}}</p>
+
+            <h1>三元运算符</h1>
+            <p>{{age >= 18 ? "已成年" : "未成年"}}</p>
+        </div>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    name: 'jack',
+                    age: 18,
+                    sex: '男'
+                }
+            })
+        </script>
+    </body>
+</html>

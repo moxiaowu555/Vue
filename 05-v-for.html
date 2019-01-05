@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./vue2.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <!-- v-for 渲染数组和对象
+                v-for能够根据data中数据的变化自动刷新视图
+                v-for 渲染数组
+                    1.v-for="item in arr" item 是数组里的每一项, arr 表示需要遍历的数组
+                    2.v-for="(item, index) in arr" index 是数组的索引值
+                v-for 渲染对象
+                    1.v-for="value in obj" value 表示对象键的值, obj表示遍历的对象
+                    2.v-for="(value, key, index) in obj" 
+                      key 代表的是对象的健，index 是对象索引值
+                注意：以下两种情况不会触发视图更新
+                    1.当使用数组的length属性去改变数组时，不会触发视图更新
+                    2.使用数组下标去改变数组时
+                解决上述问题：
+                    1.使用Vue.set(arr, index, newVal) arr 是要改变的数组，index是数组里的项，   newVal是改变后的值
+                    2.Array.prototype.splice()
+
+                注意 v-for必须结合key属性来使用，它会唯一标识数组中的每一项，未来当数组中的那一项改变的时候，它会只更新那一项，好处就是提升性能。注意key的值唯一，不能重复
+            -->
+            <h1>v-for="item in arr"</h1>
+            <p v-for="item in heros" :key="item.name">{{item.name}}--{{item.sex}}</p>
+
+            <h1>v-for="(item,index) in arr"</h1>
+            <p v-for="(item, index) in heros" :key="index">{{item.name}}--{{item.sex}}--{{index}}</p>
+
+            <h1>v-for="value in obj"</h1>
+            <p v-for="value in user" :key="value">{{value}}</p>
+
+            <h1>v-for="(value, key, index) in obj"</h1>
+            <p v-for="(value, key, index) in user" :key="value">{{key}}--{{value}}--{{index}}</p>
+        </div>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    heros: [
+                        {name: '赵云', sex: '男'},
+                        {name: '王昭君', sex: '女'},
+                        {name: '凯', sex: '男'}
+                    ],
+                    user: {
+                        name: '魔小五',
+                        age: 20,
+                        sex: '男',
+                        hobby: '看电影'
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

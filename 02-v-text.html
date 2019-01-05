@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./vue2.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <!-- 输出结果：海贼王卓洛
+                 和插值表达式{{}} 的区别：插值表达式书写在标签的innerHTML中，v-text则书写在标签的属性位置，平时推荐使用{{}}
+            -->
+            <p v-text="msg"></p>
+            <p v-text="name"></p>
+            <p v-text="weapon"></p>
+            <p v-text="place"></p>
+        </div>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    msg: '海贼王卓洛',
+                    name: '宫本',
+                    weapon: '双剑',
+                    place: '打野'
+                }
+            })
+        </script>
+    </body>
+</html>
