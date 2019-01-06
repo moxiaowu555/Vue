@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./vue2.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <input type="text" v-model="firstName">
+            <input type="text" v-model="lastName">
+            <!-- 这样写不好，这样是模板逻辑变得厚重，不易维护 -->
+            <div>全名：{{firstName + lastName}}</div>
+
+            <h1>cpmputed</h1>
+            <div>全名：{{fullName}}</div>
+
+            <h1>watch</h1>
+            <div>全名：{{watchFullName}}</div>
+        </div>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    firstName: '',
+                    lastName: '',
+                    watchFullName: ''
+                },
+                // 计算属性是根据data中已有的属性，计算得到一个新的属性
+                // 创建计算属性，通过computed关键字，它是一个对象
+                // 计算属性是基于它们的依赖进行缓存的
+                computed: {
+                    // fullName 就是一个计算属性，它是一个函数，这个函数可以当做属性使用
+                    fullName() {
+                        return this.firstName + this.lastName;
+                    }
+                },
+                // watch 用来监听vue实例上数据的值，只要监听的数据一变化，就执行相应的函数
+                // 创建监听器通过watch属性，是一个对象
+                watch: {
+                    // 函数的名字是需要监听的数据的名字，包含2个参数：1.newVal，变化后的新值；2.oldVal，变化前的值
+                    firstName(newVal, oldVal) {
+                        console.log(newVal, oldVal);
+                        this.watchFullName = newVal + this.lastName;
+                    },
+                    lastName(newVal, oldVal) {
+                        this.watchFullName = this.firstName + newVal;
+                    }
+                }
+                // 开发时，能用computed实现的时候，就用computed实现
+                // 需要执行异步操作的时候，就要用到watch
+            })
+        </script>
+    </body>
+</html>

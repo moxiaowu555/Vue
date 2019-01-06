@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./vue2.js"></script>
+        <style>
+            ul {
+                width: 200px;
+            }
+            li {
+                width: 100%;
+                border: 1px solid #000;
+                border-bottom: none;
+                padding-left: 5px;
+            }
+            li:last-of-type {
+                border-bottom: 1px solid #000;
+            }
+            li span:last-of-type {
+                float: right;
+                padding-right: 10px;
+            }
+            .red {
+                background-color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <h3>总价：{{totalPrice}}</h3>
+            <ul>
+                <li v-for="(item, index) in fruits" :key="index" :class="{'red': item.isClick}" @click="computePrice(item)">
+                    <span>{{item.name}}</span>
+                    <span>&yen;{{item.price}}</span>
+                </li>
+            </ul>
+        </div>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    fruits: [
+                        {name: '苹果', price: 15, isClick: false},
+                        {name: '梨子', price: 10, isClick: false},
+                        {name: '樱桃', price: 22, isClick: false},
+                        {name: '西瓜', price: 13, isClick: false}
+                    ],
+                    // 定义总价属性
+                    totalPrice: 0
+                },
+                methods: {
+                    computePrice(item) {
+                        item.isClick = !item.isClick;
+                        console.log(item.isClick);
+                        if(item.isClick) {
+                            this.totalPrice += item.price;
+                        } else {
+                            this.totalPrice -= item.price;
+                        }
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

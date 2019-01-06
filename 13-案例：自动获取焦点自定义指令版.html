@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="./vue2.js"></script>
+    <style>
+        #app{
+            width:600px;
+            margin:10px auto;
+        }
+        .tb{
+            border-collapse:collapse;
+             width: 100%;
+        }
+        .tb th{
+            background-color: #0094ff;
+            color:white;
+        }
+        .tb td,.tb th{
+            padding:5px;
+            border:1px solid black;
+            text-align: center;
+        }
+        .add{
+            padding: 5px;
+            border:1px solid black;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="add">
+            编号:<input type="text" v-model="newId" v-mycolor="colorValue">
+            <!-- 新增按回车键添加数据功能 -->
+            品牌名称:<input type="text" v-model="newTitle" @keydown.enter="addData" v-myfocus>
+            <input type="button" value="添加" @click="addData">
+        </div>
+
+        <div class="add">
+            品牌名称:<input type="text" placeholder="请输入搜索条件">
+        </div>
+
+        <div>
+            <table class="tb">
+                <tr>
+                    <th>编号</th>
+                    <th>品牌名称</th>
+                    <th>创立时间</th>
+                    <th>操作</th>
+                </tr>
+                <tr v-for="(item, index) in list" :key="index">
+                    <td>{{item.id}}</td>
+                    <td>{{item.title}}</td>
+                    <td>{{item.ctime}}</td>
+                    <!-- 传参，把当前tr行的索引index传递给回调函数 -->
+                    <td><a href="javascript:;" @click="deleteData(index)">删除</a></td>
+                </tr>
+                <tr v-if="list.length == 0">
+                    <td colspan="4">没有品牌数据</td>
+                </tr>
+                <!-- 动态生成内容tr -->
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // 自定义指令通过 Vue.directive() 创建，包含两个参数，1.自定义指令名称，可以随便取，但是全部小写；2.是一个对象，表示自定义指令的配置项
+        // 这里实际创建的是v-myfocus指令
+        Vue.directive('myfocus', {
+            // inserted钩子函数，它表示自定义指令插入到标签中的时候就执行
+            // 有2个参数：1.el,表示使用自定义指令的元素；2.表示自定义指令的信息
+            inserted: function(el, binding) {
+                console.log(el);
+                console.log(binding);
+                el.focus()
+            }
+        });
+
+        // 自定义v-mycolor指令
+        Vue.directive('mycolor', {
+            inserted: function(el, binding) {
+                console.log(binding);
+                // binding.value 可以获取自定义指令绑定的属性的值
+                el.style.color = binding.value;
+            }
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                list: [
+                    {id: 1, title: 'HM', ctime: new Date()},
+                    {id: 2, title: 'KM', ctime: new Date()},
+                    {id: 3, title: 'MT', ctime: new Date()}
+                ],
+                newId: '',
+                newTitle: '',
+                colorValue: 'red'
+            },
+            methods: {
+                deleteData(index) {
+                    this.list.splice(index, 1);
+                },
+                addData() {
+                    this.list.push({id: this.newId, title: this.newTitle, ctime: new Date()});
+                    // 清空input框数值
+                    this.newId = '';
+                    this.newTitle = ''
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

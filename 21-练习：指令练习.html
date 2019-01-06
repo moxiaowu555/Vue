@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./vue2.js"></script>
+        <style>
+            input {
+                height: 30px;
+                padding-left: 10px;
+            }
+            ul {
+                width: 500px;
+            }
+            ul li {
+                width: 100%;
+                border-bottom: 1px solid #ccc;
+                padding: 10px 2px;
+                list-style: none;
+            }
+            ul li a {
+                display: inline-block;
+                background-color: red;
+                text-decoration: none;
+                color: #fff;
+                padding: 3px;
+                border-radius: 3px;
+                float: right;
+            }
+            .finished {
+                text-decoration: line-through;
+                color: #ccc;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <input type="text" placeholder="edit something" autofocus v-model="inputVal" @keyup.enter="addData">
+            <ul>
+                <li v-for="(item, index) in list" :key="index">
+                    <span>{{item}}</span>
+                    <a href="javascript:;" @click="deleteData(index)">删除</a>
+                </li>
+            </ul>
+            <p v-show="list.length == 0">暂无内容</p>
+        </div>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    inputVal: '',
+                    list: []
+                },
+                methods: {
+                    addData() {
+                        this.list.push(this.inputVal);
+                        this.inputVal = '';
+                    },
+                    deleteData(index) {
+                        this.list.splice(index, 1);
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

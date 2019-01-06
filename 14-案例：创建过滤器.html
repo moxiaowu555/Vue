@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="./vue2.js"></script>
+    <style>
+        #app{
+            width:600px;
+            margin:10px auto;
+        }
+        .tb{
+            border-collapse:collapse;
+             width: 100%;
+        }
+        .tb th{
+            background-color: #0094ff;
+            color:white;
+        }
+        .tb td,.tb th{
+            padding:5px;
+            border:1px solid black;
+            text-align: center;
+        }
+        .add{
+            padding: 5px;
+            border:1px solid black;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="add">
+            编号:<input type="text" v-model="newId">
+            <!-- 新增按回车键添加数据功能 -->
+            品牌名称:<input type="text" v-model="newTitle" @keydown.enter="addData">
+            <input type="button" value="添加" @click="addData">
+        </div>
+
+        <div class="add">
+            品牌名称:<input type="text" placeholder="请输入搜索条件">
+        </div>
+
+        <div>
+            <table class="tb">
+                <tr>
+                    <th>编号</th>
+                    <th>品牌名称</th>
+                    <th>创立时间</th>
+                    <th>操作</th>
+                </tr>
+                <tr v-for="(item, index) in list" :key="index">
+                    <td>{{item.id}}</td>
+                    <td>{{item.title}}</td>
+                    <!-- 在需要过滤的数据后面加上管道符 | 过滤器名称 -->
+                    <!-- dateFmt 的第一个参数默认就是管道符左边的值 -->
+                    <!-- <td>{{item.ctime | dateFmt('/')}}</td> -->
+                    <!-- 私有过滤器使用 -->
+                    <td>{{item.ctime | fmtDate('-')}}</td>
+                    <!-- 传参，把当前tr行的索引index传递给回调函数 -->
+                    <td><a href="javascript:;" @click="deleteData(index)">删除</a></td>
+                </tr>
+                <tr v-if="list.length == 0">
+                    <td colspan="4">没有品牌数据</td>
+                </tr>
+                <!-- 动态生成内容tr -->
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // 通过Vue.filter() 方法创建过滤器，有2个参数：1.过滤器的名字；2.过滤器的处理函数，这个函数有个默认参数--表示需要过滤的数据
+
+        // 创建一个时间过滤器dateFmt
+        // 传递参数：seprator 分离器
+        Vue.filter('dateFmt', function(time, seprator) {
+            // console.log(time);
+            var y = time.getFullYear();
+            var m = time.getMonth() + 1;
+            var d = time.getDate();
+            var date = y + seprator + m + seprator + d;
+            return date;
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                list: [
+                    {id: 1, title: 'HM', ctime: new Date()},
+                    {id: 2, title: 'KM', ctime: new Date()},
+                    {id: 3, title: 'MT', ctime: new Date()}
+                ],
+                newId: '',
+                newTitle: ''
+            },
+            // 创建私有过滤器
+            filters: {
+                // 定义在 VM中的filters对象中的所有过滤器都是私有过滤器
+                fmtDate(input, seprator) {
+                    console.log(input);
+                    var y = input.getFullYear();
+                    var m = input.getMonth() + 1;
+                    var d = input.getDate();
+                    var date = y + seprator + m + seprator + d;
+                    return date;
+                }
+            },
+            methods: {
+                deleteData(index) {
+                    this.list.splice(index, 1);
+                },
+                addData() {
+                    this.list.push({id: this.newId, title: this.newTitle, ctime: new Date()});
+                    // 清空input框数值
+                    this.newId = '';
+                    this.newTitle = ''
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
