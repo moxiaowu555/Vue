@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="./vue2.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <!-- 注意：v-else必须跟在v-if 或 v-else-if后面，才能被识别 -->
+            <p v-if="type === 'A'">A</p>
+            <p v-else-if="type === 'B'">B</p>
+            <p v-else-if="type === 'C'">C</p>
+            <p v-else>Not A/B/C</p>
+
+        </div>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    type: 'VVV' 
+                }
+            })
+        </script>
+    </body>
+</html>
